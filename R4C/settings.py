@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from api.constants import DATE_FORMAT
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,11 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'customers',
-    'orders',
-    'robots',
+    'customers.apps.CustomersConfig',
+    'orders.apps.OrdersConfig',
+    'robots.apps.RobotsConfig',
     'rest_framework',
-    'api',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': DATE_FORMAT,
+    'DATETIME_INPUT_FORMATS': (DATE_FORMAT,),
+
+}
