@@ -44,10 +44,17 @@ pip install -r requirements.txt
 python manage.py migrate   
 python manage.py runserver   
 ```
+http://127.0.0.1:8000/api/v1/
 
 # Реализация
 ## Приложение api
 ### Эндпоинты
+Для урлов использовался routers.DefaultRouter() 
+доступные эндпоинты:
+http://127.0.0.1:8000/api/v1/robots/
+http://127.0.0.1:8000/api/v1/robots/
+
+
 
 ### уровень сериализации 
 Валидация
