@@ -1,4 +1,4 @@
 djangorestframework==3.12.4
 Django==3.2.16
 pandas
-openpyxl
+xlsxwriter
