@@ -7,6 +7,7 @@ from io import BytesIO
 
 from django.db.models import Count
 from robots.models import Robot
+from customers.models import Customer
 from api.serializers import (
     CustomerSerializer,
     RobotGetSerializer,
@@ -57,3 +58,9 @@ class RobotViewSet(viewsets.ModelViewSet):
             response['Content-Disposition'] = (
                 f'attachment; filename={filename}.xlsx')
             return response
+
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    """Вью для покупателей: crud-операции."""
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
