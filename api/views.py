@@ -7,7 +7,11 @@ from io import BytesIO
 
 from django.db.models import Count
 from robots.models import Robot
-from api.serializers import RobotGetSerializer, RobotPostSerializer
+from api.serializers import (
+    CustomerSerializer,
+    RobotGetSerializer,
+    RobotPostSerializer
+)
 from api.constants import PERIOD
 
 

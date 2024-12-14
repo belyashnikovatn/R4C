@@ -2,10 +2,13 @@ from django.utils import timezone
 
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
-from rest_framework.validators import UniqueTogetherValidator
+from rest_framework.validators import UniqueValidator
 
 from robots.models import Robot
+from customers.models import Customer
+from orders.models import Order
 from api.constants import (
+    EMAIL_LEN,
     LETTERS,
     MODEL_LEN,
     VERSION_LEN
@@ -86,3 +89,16 @@ class RobotPostSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return RobotGetSerializer(instance).data
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    """Клиенты: валидация."""
+    email = serializers.EmailField(
+        required=True,
+        max_length=EMAIL_LEN,
+        validators=[UniqueValidator(queryset=Customer.objects.all())]
+    )
+
+    class Meta:
+        fields = ('email',)
+        model = Customer
