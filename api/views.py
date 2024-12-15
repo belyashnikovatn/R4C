@@ -6,12 +6,14 @@ import pandas as pd
 from io import BytesIO
 
 from django.db.models import Count
-from robots.models import Robot
 from customers.models import Customer
+from orders.models import Order
+from robots.models import Robot
 from api.serializers import (
     CustomerSerializer,
+    OrderSerializer,
     RobotGetSerializer,
-    RobotPostSerializer
+    RobotPostSerializer,
 )
 from api.constants import PERIOD
 
@@ -64,3 +66,9 @@ class CustomerViewSet(viewsets.ModelViewSet):
     """Вью для покупателей: crud-операции."""
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    """Вью для заказов: crud-операции."""
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer

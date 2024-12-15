@@ -11,7 +11,8 @@ from api.constants import (
     EMAIL_LEN,
     LETTERS,
     MODEL_LEN,
-    VERSION_LEN
+    SERIAL_LEN,
+    VERSION_LEN,
 )
 
 
@@ -100,5 +101,24 @@ class CustomerSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = ('email',)
+        fields = ('__all__')
         model = Customer
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    """Заказы: валидация."""
+    customer = serializers.PrimaryKeyRelatedField(
+        # slug_field='id',
+        queryset=Customer.objects.all(),
+        # # many=True,
+        # # read_only=True,
+        required=True
+    )
+    robot_serial = serializers.CharField(
+        max_length=SERIAL_LEN,
+        required=True
+    )
+
+    class Meta:
+        fields = ('__all__')
+        model = Order
