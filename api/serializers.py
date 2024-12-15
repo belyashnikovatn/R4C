@@ -1,5 +1,5 @@
 from django.utils import timezone
-
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 from rest_framework.validators import UniqueValidator
@@ -108,10 +108,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     """Заказы: валидация."""
     customer = serializers.PrimaryKeyRelatedField(
-        # slug_field='id',
         queryset=Customer.objects.all(),
-        # # many=True,
-        # # read_only=True,
         required=True
     )
     robot_serial = serializers.CharField(
@@ -122,3 +119,47 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('__all__')
         model = Order
+
+    def validate(self, data):
+        if 'customer' not in data:
+            raise serializers.ValidationError(
+                'Укажите номер клиента'
+            )
+        if 'robot_serial' not in data:
+            raise serializers.ValidationError(
+                'Укажите серийный номер робота'
+            )
+        return data
+
+    def validate_customer(self, data):
+        customer_id = data['customer']
+        customer = get_object_or_404(Customer, pk=customer_id)
+        if not customer:
+            raise serializers.ValidationError('Такого клиента нет')
+        return data
+
+    def validate_robot_serial(self, data):
+        parts = data.split('-')
+        if len(parts) != 2:
+            raise serializers.ValidationError(
+                'Неверно указан серийный номер'
+            )
+        model, version = parts
+
+        if not all([char in LETTERS for char in model]):
+            raise serializers.ValidationError(
+                'В наименовании модели могут быть только символы'
+            )
+        if len(model) > MODEL_LEN:
+            raise serializers.ValidationError(
+                'Наименование модели не может быть больше 2-ух символов'
+            )
+        if not all([char in LETTERS for char in version]):
+            raise serializers.ValidationError(
+                'В наименовании версии могут быть только символы'
+            )
+        if len(version) > VERSION_LEN:
+            raise serializers.ValidationError(
+                'Наименование версии не может быть больше 2-ух символов'
+            )
+        return data
