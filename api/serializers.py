@@ -131,13 +131,6 @@ class OrderSerializer(serializers.ModelSerializer):
             )
         return data
 
-    def validate_customer(self, data):
-        customer_id = data['customer']
-        customer = get_object_or_404(Customer, pk=customer_id)
-        if not customer:
-            raise serializers.ValidationError('Такого клиента нет')
-        return data
-
     def validate_robot_serial(self, data):
         parts = data.split('-')
         if len(parts) != 2:
