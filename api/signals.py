@@ -16,7 +16,7 @@ def send_order_notification(instance, **kwargs):
     if recipient_list := Order.objects.filter(
                 robot_serial=instance.serial).distinct().values_list(
                 'customer__email', flat=True):
-        subject = 'Something new in R4C'
+        subject = f'Something new in R4C: {instance.serial}'
         message = render_to_string('new_robot.html', {'robot': instance})
         mail = EmailMessage(
             subject=subject,
