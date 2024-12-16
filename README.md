@@ -34,8 +34,10 @@ ___
 
 
 # Запуск проекта
-git clone  
-<br>
+```bash
+git clone git@github.com:belyashnikovatn/R4C.git 
+```
+
 ```bash
 python -m venv venv   
 . venv/Scripts/activate  
