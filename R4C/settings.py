@@ -57,10 +57,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'R4C.urls'
 
+# TEMPLATES_DIR for email-template
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,8 +130,13 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
+# Settings for validation
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': DATE_FORMAT,
     'DATETIME_INPUT_FORMATS': (DATE_FORMAT,),
 
 }
+
+# Settings to send emails
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')

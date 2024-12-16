@@ -1,15 +1,17 @@
 from django.utils import timezone
-
 from rest_framework import serializers
-from rest_framework.relations import SlugRelatedField
-from rest_framework.validators import UniqueTogetherValidator
+from rest_framework.validators import UniqueValidator
 
-from robots.models import Robot
 from api.constants import (
+    EMAIL_LEN,
     LETTERS,
     MODEL_LEN,
-    VERSION_LEN
+    SERIAL_LEN,
+    VERSION_LEN,
 )
+from customers.models import Customer
+from orders.models import Order
+from robots.models import Robot
 
 
 class RobotGetSerializer(serializers.ModelSerializer):
@@ -86,3 +88,69 @@ class RobotPostSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return RobotGetSerializer(instance).data
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    """Клиенты: валидация."""
+    email = serializers.EmailField(
+        required=True,
+        max_length=EMAIL_LEN,
+        validators=[UniqueValidator(queryset=Customer.objects.all())]
+    )
+
+    class Meta:
+        fields = ('__all__')
+        model = Customer
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    """Заказы: валидация."""
+    customer = serializers.PrimaryKeyRelatedField(
+        queryset=Customer.objects.all(),
+        required=True
+    )
+    robot_serial = serializers.CharField(
+        max_length=SERIAL_LEN,
+        required=True
+    )
+
+    class Meta:
+        fields = ('__all__')
+        model = Order
+
+    def validate(self, data):
+        if 'customer' not in data:
+            raise serializers.ValidationError(
+                'Укажите номер клиента'
+            )
+        if 'robot_serial' not in data:
+            raise serializers.ValidationError(
+                'Укажите серийный номер робота'
+            )
+        return data
+
+    def validate_robot_serial(self, data):
+        parts = data.split('-')
+        if len(parts) != 2:
+            raise serializers.ValidationError(
+                'Неверно указан серийный номер'
+            )
+        model, version = parts
+
+        if not all([char in LETTERS for char in model]):
+            raise serializers.ValidationError(
+                'В наименовании модели могут быть только символы'
+            )
+        if len(model) > MODEL_LEN:
+            raise serializers.ValidationError(
+                'Наименование модели не может быть больше 2-ух символов'
+            )
+        if not all([char in LETTERS for char in version]):
+            raise serializers.ValidationError(
+                'В наименовании версии могут быть только символы'
+            )
+        if len(version) > VERSION_LEN:
+            raise serializers.ValidationError(
+                'Наименование версии не может быть больше 2-ух символов'
+            )
+        return data

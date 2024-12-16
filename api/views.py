@@ -1,14 +1,21 @@
-from django.shortcuts import get_object_or_404
+from io import BytesIO
+import pandas as pd
+
+from django.db.models import Count
 from django.http import HttpResponse
 from rest_framework import viewsets
 from rest_framework.decorators import action
-import pandas as pd
-from io import BytesIO
 
-from django.db.models import Count
-from robots.models import Robot
-from api.serializers import RobotGetSerializer, RobotPostSerializer
 from api.constants import PERIOD
+from api.serializers import (
+    CustomerSerializer,
+    OrderSerializer,
+    RobotGetSerializer,
+    RobotPostSerializer,
+)
+from customers.models import Customer
+from orders.models import Order
+from robots.models import Robot
 
 
 def get_models(period=PERIOD) -> list[str]:
@@ -53,3 +60,15 @@ class RobotViewSet(viewsets.ModelViewSet):
             response['Content-Disposition'] = (
                 f'attachment; filename={filename}.xlsx')
             return response
+
+
+class CustomerViewSet(viewsets.ModelViewSet):
+    """Вью для покупателей: crud-операции."""
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    """Вью для заказов: crud-операции."""
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
