@@ -132,3 +132,6 @@ REST_FRAMEWORK = {
     'DATETIME_INPUT_FORMATS': (DATE_FORMAT,),
 
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR + '/sent_emails'

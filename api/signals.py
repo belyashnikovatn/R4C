@@ -14,6 +14,6 @@ def send_order_notification(sender, instance, created, **kwargs):
             f' версии {instance.version}. Этот робот теперь в наличии.'
             f' Если вам подходит этот вариант - пожалуйста, свяжитесь с нами'
         )
-        from_email = 'no=replay@r4c.com'
+        from_email = 'no-replay@r4c.com'
         recipient_list = ['belyashnikova.tn@gmail.com']
         send_mail(subject, message, from_email, recipient_list)
