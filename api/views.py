@@ -1,21 +1,21 @@
-from django.shortcuts import get_object_or_404
+from io import BytesIO
+import pandas as pd
+
+from django.db.models import Count
 from django.http import HttpResponse
 from rest_framework import viewsets
 from rest_framework.decorators import action
-import pandas as pd
-from io import BytesIO
 
-from django.db.models import Count
-from customers.models import Customer
-from orders.models import Order
-from robots.models import Robot
+from api.constants import PERIOD
 from api.serializers import (
     CustomerSerializer,
     OrderSerializer,
     RobotGetSerializer,
     RobotPostSerializer,
 )
-from api.constants import PERIOD
+from customers.models import Customer
+from orders.models import Order
+from robots.models import Robot
 
 
 def get_models(period=PERIOD) -> list[str]:

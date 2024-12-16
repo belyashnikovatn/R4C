@@ -1,12 +1,7 @@
 from django.utils import timezone
-from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from rest_framework.relations import SlugRelatedField
 from rest_framework.validators import UniqueValidator
 
-from robots.models import Robot
-from customers.models import Customer
-from orders.models import Order
 from api.constants import (
     EMAIL_LEN,
     LETTERS,
@@ -14,6 +9,9 @@ from api.constants import (
     SERIAL_LEN,
     VERSION_LEN,
 )
+from customers.models import Customer
+from orders.models import Order
+from robots.models import Robot
 
 
 class RobotGetSerializer(serializers.ModelSerializer):

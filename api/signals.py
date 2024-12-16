@@ -1,11 +1,7 @@
+from django.core.mail import EmailMessage
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.mail import send_mail
-from django.core.mail import EmailMessage
-from django.template import Context
-from django.template.loader import get_template, render_to_string
 from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
 
 from orders.models import Order
 from robots.models import Robot
