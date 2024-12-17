@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+
+
+{% comment %} <form action="{% url 'customers:list' %}" method="POST" enctype="multipart/form-data"> {% endcomment %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% render_form serializer %}
+    <input type="submit" value="Save">
+</form>
+
+{% endblock %}
