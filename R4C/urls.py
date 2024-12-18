@@ -3,7 +3,7 @@ from django.urls import include, path
 
 from robots.views import Home
 
-app_name = 'rc'
+app_name = 'r4c'
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),

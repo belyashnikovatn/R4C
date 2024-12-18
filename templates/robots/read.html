@@ -4,11 +4,16 @@
 {% block content %}
 <h1 class="pb-2 mb-0">Список роботов</h1>
 
+
+  <a href="{% url 'robots:summary' %}" >СКАЧАТЬ СПИСОК РОБОТОВ</a>
+  <hr>
+
   <form action="{% url 'robots:create' %}" method="post" class="col-3">
     {% bootstrap_button button_type="submit" content="Создать робота" %}
   </form>
-
+  
   <hr>
+
   {% for robot in robots %}
   <div class="row">
     <div class="col-8"> 
