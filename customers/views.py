@@ -10,7 +10,7 @@ from customers.models import Customer
 
 class CustomerRead(generics.ListAPIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'customers/customer_read.html'
+    template_name = 'customers/read.html'
 
     def get(self, request):
         customers = Customer.objects.all()
@@ -20,7 +20,7 @@ class CustomerRead(generics.ListAPIView):
 class CustomerCreate(generics.CreateAPIView):
     serializer_class = CustomerSerializer
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'customers/customer_create.html'
+    template_name = 'customers/create.html'
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -34,7 +34,7 @@ class CustomerCreate(generics.CreateAPIView):
 
 class CustomerEdit(generics.UpdateAPIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'customers/customer_edit.html'
+    template_name = 'customers/edit.html'
 
     def get(self, request, pk):
         customer = get_object_or_404(Customer, pk=pk)
@@ -49,7 +49,10 @@ class CustomerEdit(generics.UpdateAPIView):
             return redirect('customers:read')
         else:
             context = {'serializer': serializer}
-            return Response(context, template_name='customers/customer_read.html')
+            return Response(context, template_name='customers/create.html')
+            # customers = Customer.objects.all()
+            # context = {'customers': customers}
+            # return Response(context, template_name='customers/read.html')
 
 
 class CustomerDelete(APIView):
@@ -59,4 +62,4 @@ class CustomerDelete(APIView):
         customer = get_object_or_404(Customer, pk=pk)
         context = {'pk': pk}
         customer.delete()
-        return Response(context, template_name='customers/customer_delete.html')
+        return Response(context, template_name='customers/delete.html')

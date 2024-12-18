@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load rest_framework %}
+{% block content %}
+
+  <form action="{% url 'robots:create' %}" method="post" class="col-3">
+    {% bootstrap_button button_type="submit" content="Создать робота" %}
+  </form>
+
+  <hr>
+  {% for robot in robots %}
+  <div class="row">
+    <div class="col-8"> 
+        <div>
+          <b>{{ robot.id }}</b>   {{ robot.serial}}  {{ robot.created}} 
+        </div>
+    </div>
+    <div class="col-4"> 
+        <div>
+          <a href="{% url 'robots:edit' robot.id %}" >Изменить</a>
+          <a href="{% url 'robots:delete' robot.id %}" >Удалить</a>
+        </div>
+    </div>
+    {% if not forloop.last %}
+    <hr class="mt-3">
+    {% endif %}
+  </div>
+  {% endfor %}
+{% endblock %}

@@ -27,8 +27,8 @@ class RobotPostSerializer(serializers.ModelSerializer):
     """Роботы: POST, валидация, предзаполнение."""
     model = serializers.CharField(required=True)
     version = serializers.CharField(required=True)
-    # created = serializers.DateTimeField(required=True)
-    created = serializers.CharField(required=True)
+    created = serializers.DateTimeField(required=True)
+    # created = serializers.CharField(required=True)
 
     class Meta:
         fields = ('model', 'version', 'created')
