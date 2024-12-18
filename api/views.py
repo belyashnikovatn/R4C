@@ -1,16 +1,9 @@
-from django.contrib import messages
 from io import BytesIO
 import pandas as pd
 
-from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Count
 from django.http import HttpResponse
-from rest_framework import viewsets, generics, status
-from rest_framework.decorators import action
-from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
-from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import viewsets
 
 from api.constants import PERIOD
 from api.serializers import (
