@@ -4,7 +4,7 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.serializers import RobotPostSerializer, RobotGetSerializer
+from api.serializers import RobotPostSerializer
 from robots.models import Robot
 
 
@@ -50,9 +50,6 @@ class RobotEdit(generics.UpdateAPIView):
         else:
             context = {'serializer': serializer}
             return Response(context, template_name='robots/create.html')
-            # robots = Robot.objects.all()
-            # context = {'robots': robots}
-            # return Response(context, template_name='robots/read.html')
 
 
 class RobotDelete(APIView):

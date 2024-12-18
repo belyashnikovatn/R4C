@@ -50,9 +50,6 @@ class CustomerEdit(generics.UpdateAPIView):
         else:
             context = {'serializer': serializer}
             return Response(context, template_name='customers/create.html')
-            # customers = Customer.objects.all()
-            # context = {'customers': customers}
-            # return Response(context, template_name='customers/read.html')
 
 
 class CustomerDelete(APIView):

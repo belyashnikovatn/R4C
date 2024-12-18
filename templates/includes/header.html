@@ -15,6 +15,12 @@
               Покупатели
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {% if view_name == 'orders:read' %} active {% endif %}"
+              href="{% url 'orders:read' %}">
+              Заказы
+            </a>
+          </li>
         </ul>
         {% endwith %}
       </div>
