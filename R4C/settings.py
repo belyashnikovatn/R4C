@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+
 from api.constants import DATE_FORMAT
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'robots.apps.RobotsConfig',
     'rest_framework',
     'api.apps.ApiConfig',
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': DATE_FORMAT,
     'DATETIME_INPUT_FORMATS': (DATE_FORMAT,),
-
+    'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
 }
 
 # Settings to send emails

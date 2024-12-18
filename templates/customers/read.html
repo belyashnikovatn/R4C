@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load rest_framework %}
+{% block content %}
+<h1 class="pb-2 mb-0">Список покупателей</h1>
+
+  <form action="{% url 'customers:create' %}" method="post" class="col-3">
+    {% bootstrap_button button_type="submit" content="Создать покупателя" %}
+  </form>
+
+  <hr>
+  {% for customer in customers %}
+  <div class="row">
+    <div class="col-8"> 
+        <div>
+          <b>{{ customer.id }}</b>   {{ customer.email}} 
+        </div>
+    </div>
+    <div class="col-4"> 
+        <div>
+          <a href="{% url 'customers:edit' customer.id %}" >Изменить</a>
+          <a href="{% url 'customers:delete' customer.id %}" >Удалить</a>
+        </div>
+    </div>
+    {% if not forloop.last %}
+    <hr class="mt-3">
+    {% endif %}
+  </div>
+  {% endfor %}
+{% endblock %}
