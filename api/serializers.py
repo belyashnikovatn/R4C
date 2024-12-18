@@ -92,6 +92,7 @@ class RobotPostSerializer(serializers.ModelSerializer):
         robot.version = validated_data['version']
         robot.serial = '-'.join(
             [validated_data['model'], validated_data['version']])
+        robot.created = validated_data['created']
         robot.save()
         return robot
 
