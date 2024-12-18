@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import include, path
 
+from robots.views import Home
 
-app_name = 'r4c'
+app_name = 'rc'
 
 urlpatterns = [
+    path('', Home.as_view(), name='home'),
     path('robots/', include('robots.urls')),
     path('customers/', include('customers.urls')),
     path('orders/', include('orders.urls')),

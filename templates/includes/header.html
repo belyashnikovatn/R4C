@@ -4,6 +4,12 @@
         {% with request.resolver_match.view_name as view_name %}
         <ul class="nav nav-pills">
           <li class="nav-item">
+            <a class="nav-link {% if view_name == 'rc:home' %} active {% endif %}"
+              href="{% url 'rc:home' %}">
+              Домой
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link {% if view_name == 'robots:read' %} active {% endif %}"
               href="{% url 'robots:read' %}">
               Роботы

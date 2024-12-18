@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import TemplateView
 from rest_framework import generics
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -6,6 +7,10 @@ from rest_framework.views import APIView
 
 from api.serializers import RobotPostSerializer
 from robots.models import Robot
+
+
+class Home(TemplateView):
+    template_name = 'index.html'
 
 
 class RobotRead(generics.ListAPIView):
