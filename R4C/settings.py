@@ -148,8 +148,12 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': DATE_FORMAT,
     'DATETIME_INPUT_FORMATS': (DATE_FORMAT,),
     # 'DATETIME_INPUT_FORMATS': "%Y-%m-%d - %H:%M:%S",
-
+    'DEFAULT_RENDERER_CLASSES': ( 
+        'rest_framework.renderers.JSONRenderer', 
+    ), 
 }
+
+
 
 # Settings to send emails
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'

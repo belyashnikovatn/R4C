@@ -1,12 +1,13 @@
+from django.contrib import messages
 from io import BytesIO
 import pandas as pd
 
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Count
 from django.http import HttpResponse
-from rest_framework import viewsets
+from rest_framework import viewsets, generics, status
 from rest_framework.decorators import action
-from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -23,81 +24,6 @@ from orders.models import Order
 from robots.models import Robot
 
 
-# class CustomerAdd(APIView):
-#     renderer_classes = [TemplateHTMLRenderer]
-#     template_name = 'customer_form.html'
-
-#     # def get(self, request):
-#     #     customers = Customer.objects.all()
-#     #     return Response({'customers': customers})
-
-#     def post(self, request):
-#         serializer = CustomerSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         customers = Customer.objects.all()
-#         return Response({'customers': customers})
-#         # return Response(serializer.data)
-
-
-class CustomerList(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'customer_list.html'
-
-    def get(self, request):
-        customers = Customer.objects.all()
-        return Response({'customers': customers})
-
-    def post(self, request):
-        serializer = CustomerSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-    
-    # renderer_classes = [TemplateHTMLRenderer]
-    # template_name = 'customer_form.html'
-
-    # def get(self, request):
-    #     queryset = Customer.objects.all()
-    #     return Response({'customers': queryset})
-
-    # def post(self, request):
-    #     serializer = CustomerSerializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     return redirect('customers:list')
-
-
-class CustomerDetail(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'customer_detail.html'
-    # template_name = 'customer_form.html'
-
-    def get(self, request, pk):
-        customer = get_object_or_404(Customer, pk=pk)
-        serializer = CustomerSerializer(customer)
-        return Response({'serializer': serializer, 'customer': customer})
-
-    def post(self, request, pk=None):
-        if pk:
-            customer = get_object_or_404(Customer, pk=pk)
-            serializer = CustomerSerializer(customer, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return redirect('customers:list')
-        else:
-            serializer = CustomerSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
-
-        # return redirect('student_add')
-        # customer = get_object_or_404(Customer, pk=pk)
-        # serializer = CustomerSerializer(customer, data=request.data)
-        # if not serializer.is_valid():
-            # return Response({'serializer': serializer, 'customer': customer})
-        # serializer.save()
-        # return redirect('customers:list')
 
 
 class RobotList(APIView):

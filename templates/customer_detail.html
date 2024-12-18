@@ -7,7 +7,7 @@
 {% if customer.pk == 0%}
 THATS NEW
 {% else %}
-<form action="{% url 'customers:detail' pk=customer.pk %}" method="POST">
+<form action="{% url 'customers:edit' pk=customer.pk %}" method="POST">
     {% csrf_token %}
     {% render_form serializer %}
     <input type="submit" value="Save">
