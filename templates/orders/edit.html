@@ -2,6 +2,7 @@
 {% load django_bootstrap5 %}
 {% load rest_framework %}
 {% block content %}
+<h1 class="pb-2 mb-0">Редактирование заказа</h1>
 
 <div class="card-body">
 <form action="{% url 'orders:edit' pk=order.pk %}" enctype="multipart/form-data" method="POST">
