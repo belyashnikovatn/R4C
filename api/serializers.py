@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -27,8 +29,7 @@ class RobotPostSerializer(serializers.ModelSerializer):
     """Роботы: POST, валидация, предзаполнение."""
     model = serializers.CharField(required=True)
     version = serializers.CharField(required=True)
-    created = serializers.DateTimeField(required=True)
-    # created = serializers.CharField(required=True)
+    created = serializers.CharField(required=True)
 
     class Meta:
         fields = ('model', 'version', 'created')
@@ -66,12 +67,18 @@ class RobotPostSerializer(serializers.ModelSerializer):
             )
         return data
 
-    # def validate_created(self, data):
-    #     if data > timezone.now():
-    #         raise serializers.ValidationError(
-    #             'Дата создания не может быть больше текущей'
-    #         )
-    #     return data
+    def validate_created(self, data):
+        try:
+            date = datetime.strptime(data, DATE_FORMAT)
+        except ValueError:
+            raise serializers.ValidationError(
+                f'Дата должна быть формата {DATE_FORMAT}')
+        date = date.replace(tzinfo=timezone.utc).astimezone(tz=None)
+        if date > timezone.now():
+            raise serializers.ValidationError(
+                'Дата создания не может быть больше текущей'
+            )
+        return data
 
     def create(self, validated_data):
         serial = '-'.join([validated_data['model'], validated_data['version']])

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django.conf.global_settings
 
 from api.constants import DATE_FORMAT
 
@@ -133,27 +132,12 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-DATETIME_INPUT_FORMATS = [
-    # *django.conf.global_settings.DATETIME_INPUT_FORMATS,
-    DATE_FORMAT,
-]
-
-DATETIME_FORMAT = [
-    # *django.conf.global_settings.DATETIME_FORMAT,
-    DATE_FORMAT
-]
-
 # Settings for validation
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': DATE_FORMAT,
     'DATETIME_INPUT_FORMATS': (DATE_FORMAT,),
-    # 'DATETIME_INPUT_FORMATS': "%Y-%m-%d - %H:%M:%S",
-    'DEFAULT_RENDERER_CLASSES': ( 
-        'rest_framework.renderers.JSONRenderer', 
-    ), 
+    'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
 }
-
-
 
 # Settings to send emails
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
